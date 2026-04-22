@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>简洁导航 | 快速访问常用网站</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft kaiti', sans-serif;
+        }
+        
+        :root {
+            --primary-color: #4a6de5;
+            --bg-color: #eeeeee;
+            --card-color: #f6fafc;
+            --text-color: #333333;
+            --border-color: #eaeaea;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            --menu-hover: #4a6de5;
+            --menu-border: #e0e0e0;
+            --menu-text: #555;
+            --menu-disabled: #999;
+        }
+        
+        .dark-mode {
+            --primary-color: #6d8bf0;
+            --bg-color: #202020;
+            --card-color: #424242;
+            --text-color: #e4e6eb;
+            --border-color: #3a3f50;
+            --shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            --menu-hover: #6d8bf0;
+            --menu-border: #444;
+            --menu-text: #e4e6eb;
+            --menu-disabled: #666;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-top: 20px;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .logo i {
+            color: var(--primary-color);
+            font-size: 38px;
+        }
+        
+        .logo h1 {
+            font-size: 36px;
+            font-weight: 700;
+        }
+        
+        .theme-toggle {
+            background: var(--card-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: var(--shadow);
+        }
+        
+        .theme-toggle:hover {
+            transform: translateY(-2px);
+        }
+        
+        .search-container {
+            margin-bottom: 40px;
+        }
+        
+        .search-box {
+            position: relative;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 16px 20px 16px 50px;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            font-size: 16px;
+            background-color: var(--card-color);
+            color: var(--text-color);
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+        
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 109, 229, 0.1);
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+        }
+        
+        .category-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            border-radius: 30px;
+            background-color: var(--card-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+        }
+        
+        .tab:hover, .tab.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .websites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .website-card {
+            background-color: var(--card-color);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            text-decoration: none;
+            color: var(--text-color);
+            display: block;
+            position: relative;
+        }
+        
+        .website-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .website-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 24px;
+            color: white;
+        }
+        
+        .website-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .website-desc {
+            font-size: 13px;
+            color: #888;
+            line-height: 1.4;
+        }
+        
+        .dark-mode .website-desc {
+            color: #aaa;
+        }
+        
+        .custom-site {
+            background-color: var(--card-color);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow);
+            border: 1px solid var(--border-color);
+        }
+        
+        .custom-site h3 {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .custom-site h3 i {
+            color: var(--primary-color);
+        }
+        
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .input-group {
+            flex: 1;
+            min-width: 200px;
+        }
+        
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .input-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+        
+        .btn {
+            padding: 12px 25px;
+            background-color: var(--primary-color);
+            color:#ffffff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #888;
+            font-size: 14px;
+            border-top: 1px solid var(--border-color);
+            margin-top: 20px;
+        }
+        
+        .context-menu {
+            position: absolute;
+            width: 180px;
+            background-color: var(--card-color);
+            border: 1px solid var(--menu-border);
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+            z-index: 1000;
+            display: none;
+            opacity: 0;
+            transform: translateY(5px);
+            transition: all 0.2s ease;
+            overflow: hidden;
+        }
+        
+        .context-menu.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .context-menu-item {
+            padding: 12px 18px;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--menu-text);
+            font-size: 14px;
+            border-bottom: 1px solid var(--menu-border);
+        }
+        
+        .context-menu-item:last-child {
+            border-bottom: none;
+        }
+        
+        .context-menu-item:hover {
+            background-color: var(--menu-hover);
+            color: white;
+            padding-left: 20px;
+        }
+        
+        .context-menu-item.disabled {
+            color: var(--menu-disabled);
+            cursor: not-allowed;
+        }
+        
+        .context-menu-item.disabled:hover {
+            background-color: transparent;
+            color: var(--menu-disabled);
+            padding-left: 18px;
+        }
+        
+        .context-menu-item i {
+            font-size: 14px;
+            width: 16px;
+            text-align: center;
+        }
+        
+        .website-card.pinned {
+            border: 2px solid var(--primary-color);
+        }
+        
+        .pinned-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            font-size: 12px;
+            color: var(--primary-color);
+        }
+        
+        @media (max-width: 768px) {
+            .websites-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            header {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .logo h1 {
+                font-size: 20px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .websites-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .category-tabs {
+                justify-content: flex-start;
+                overflow-x: auto;
+                padding-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fas fa-compass"></i>
+                <h1>网站导航</h1>
+            </div>
+            <div class="theme-toggle" id="themeToggle">
+                <i class="fas fa-moon"></i>
+            </div>
+        </header>
+        
+        <div class="search-container">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="搜索网站 或 直接输入网址跳转 (按Enter)">
+            </div>
+        </div>
+        
+        <div class="category-tabs" id="categoryTabs">
+        </div>
+        
+        <div class="websites-grid" id="websitesGrid">
+        </div>
+        
+        <div class="custom-site">
+            <h3><i class="fas fa-plus-circle"></i> 添加自定义网站</h3>
+            <div class="form-row">
+                <div class="input-group">
+                    <label for="siteName">网站名称</label>
+                    <input type="text" id="siteName" placeholder="例如：百度">
+                </div>
+                <div class="input-group">
+                    <label for="siteUrl">网站网址</label>
+                    <input type="text" id="siteUrl" placeholder="https://www.baidu.com">
+                </div>
+                <div class="input-group">
+                    <label for="siteCategory">分类</label>
+                    <input type="text" id="siteCategory" placeholder="搜索引擎" value="自定义">
+                </div>
+            </div>
+            <button class="btn" id="addSiteBtn">添加网站</button>
+  
+        </div>
+        
+        <footer>
+            <p>网站导航 作者:L1Nzy | 快速访问您最常使用的网站</p>
+        </footer>
+    </div>
+
+    <div class="context-menu" id="contextMenu">
+        <div class="context-menu-item" id="pinSite">
+            <i class="fas fa-thumbtack"></i> 置顶网站
+        </div>
+        <div class="context-menu-item" id="deleteSite">
+            <i class="fas fa-trash"></i> 删除网站
+        </div>
+    </div>
+
+    <script>
+        const originalWebsites = [
+            // 搜索引擎
+            { name: "百度", url: "https://www.baidu.com", category: "搜索引擎", icon: "",image: "./images/baidu.png",color: "#ffffff", desc: "中文搜索引擎" },
+            { name: "搜狗", url: "https://www.sogou.com", category: "搜索引擎", icon: "",image: "./images/sg.jpg",color: "#ffffff", desc: "综合搜索引擎" },
+            { name: "360搜索", url: "https://www.so.com", category: "搜索引擎", icon: "",image: "./images/360.jpg", color: "#ffffff", desc: "360综合搜索" },
+            // 视频
+            { name: "Bilibili", url: "https://www.bilibili.com", category: "视频", icon: "fa-brands fa-bilibili",image: "", color: "#FB7299", desc: "视频弹幕网站" },
+            { name: "抖音", url: "https://www.douyin.com", category: "视频", icon: "fa-brands fa-tiktok",image: "", color: "#000000", desc: "短视频平台" },
+            { name: "爱奇艺", url: "https://www.iqiyi.com", category: "视频", icon: "",image: "./images/iqiyi.jpg", color: "#ffffff", desc: "综合视频平台" },
+            { name: "腾讯视频", url: "https://v.qq.com", category: "视频", icon: "",image: "./images/txsp.jpg", color: "#ffffff", desc: "腾讯旗下视频平台" },
+            { name: "优酷", url: "https://youku.com", category: "视频", icon: "",image: "./images/yksp.jpg", color: "#ffffff", desc: "阿里旗下视频平台" },
+            { name: "虎牙", url: "https://www.huya.com", category: "视频", icon: "",image: "./images/huya.jpg", color: "#ffffff", desc: "游戏直播平台" },
+            { name: "奈飞工厂", url: "https://www.netflixgc.com/", category: "视频", icon: "",image: "./images/naif.jpg", color: "#ffffff", desc: "非官方免费影视网站" },
+                        
+            // 社交
+            { name: "微信", url: "https://wx.qq.com", category: "社交", icon: "fa-brands fa-weixin",image: "", color: "#07C160", desc: "即时通讯应用" },
+            { name: "QQ", url: "https://im.qq.com", category: "社交", icon: "fa-brands fa-qq",image: "", color: "#12B7F5", desc: "腾讯即时通讯" },
+            { name: "微博", url: "https://weibo.com", category: "社交", icon: "fa-brands fa-weibo",image: "", color: "#DF2029", desc: "社交媒体平台" },
+            // 社区
+            { name: "知乎", url: "https://www.zhihu.com", category: "社区", icon: "fa-brands fa-zhihu",image: "", color: "#0084FF", desc: "问答社区" },
+            { name: "豆瓣", url: "https://www.douban.com", category: "社区", icon: "fa-solid fa-book",image: "", color: "#2E963D", desc: "图书电影社区" },
+            { name: "小红书", url: "https://www.xiaohongshu.com", category: "社区", icon: "",image: "./images/xhs.jpg", color: "#FE2C55", desc: "生活方式社区" },
+        
+            // 音乐
+            { name: "QQ音乐", url: "https://y.qq.com", category: "音乐", icon: "",image: "./images/qqyy.jpg", color: "#ffffff", desc: "腾讯旗下音乐平台" },
+            { name: "网易云音乐", url: "https://music.163.com", category: "音乐", icon: "",image: "./images/wyy.jpg", color: "#ffffff", desc: "在线音乐平台" },
+            { name: "酷狗音乐", url: "https://www.kugou.com", category: "音乐", icon: "",image: "./images/kgyy.jpg", color: "#ffffff", desc: "在线音乐播放平台" },
+                        
+            // 购物
+            { name: "淘宝/天猫", url: "https://www.taobao.com", category: "购物", icon: "",image: "./images/taobao.jpg", color: "#ffffff", desc: "网络购物平台" },
+            { name: "京东", url: "https://www.jd.com", category: "购物", icon: "",image: "./images/jd.jpg", color: "#ffffff", desc: "综合购物网站" },
+            { name: "拼多多", url: "https://www.pinduoduo.com", category: "购物", icon: "",image: "./images/pdd.jpg", color: "#ffffff", desc: "社交电商平台" },
+            
+            // 学习
+            { name: "中国大学MOOC", url: "https://www.icourse163.org", category: "学习", icon: "",image: "./images/mooc.jpg", color: "#ffffff", desc: "在线教育平台" },
+            { name: "超星学习通", url: "https://www.chaoxing.com", category: "学习", icon: "",image: "./images/xxt.jpg", color: "#ffffff", desc: "在线学习平台" },
+            { name: "得到", url: "https://www.dedao.cn", category: "学习", icon: "",image: "./images/dedao.jpg", color: "#ffffff", desc: "知识服务平台" },
+            
+
+            // 工具
+            { name: "WPS Office", url: "https://www.wps.cn", category: "工具", icon: "fa-solid fa-file-word",image: "", color: "#2B52DF", desc: "办公文档在线协作" },
+            { name: "百度网盘", url: "https://pan.baidu.com", category: "工具", icon: "",image: "./images/bdwp.jpg", color: "#ffffff", desc: "云存储与文件分享" },
+            { name: "腾讯微云网盘", url: "https://www.weiyun.com", category: "工具", icon: "",image: "./images/txwy.jpg", color: "#ffffff", desc: "腾讯云存储服务" },
+            { name: "腾讯企业网盘", url: "https://pan.tencent.com", category: "工具", icon: "",image: "./images/txy.jpg", color: "#ffffff", desc: "腾讯云存储服务" },
+            { name: "钉钉", url: "https://www.dingtalk.com", category: "工具", icon: "",image: "./images/dd.jpg", color: "#ffffff", desc: "企业级通讯工具" },
+            { name: "企业微信", url: "https://work.weixin.qq.com", category: "工具", icon: "",image: "./images/qywx.jpg", color: "#ffffff", desc: "企业级办公沟通工具" },
+               // 开发
+            { name: "GitHub", url: "https://github.com", category: "开发", icon: "fa-brands fa-github",image: "", color: "#333333", desc: "GitHub国内镜像" },
+            { name: "开源中国", url: "https://www.oschina.net", category: "开发", icon: "fa-solid fa-code",image: "", color: "#F08047", desc: "中文开源社区" },
+                     
+            // 网页游戏
+            { name: "F1发车反应测试", url: "https://lin060911.github.io/react/", category: "网页游戏", icon: "",image: "./images/f1.jpg", color: " #000000", desc: "" },
+            { name: "色彩大师", url: "https://lin060911.github.io/color/", category: "网页游戏", icon: "fa-solid fa-palette",image: "", color: " #e45369", desc: "" },
+            { name: "反向扫雷", url: "https://lin060911.github.io/deMine/", category: "网页游戏", icon: "fa-solid fa-land-mine-on",image: "", color: "#6ae03f", desc: "" },
+            { name: "时间感测试", url: "https://lin060911.github.io/tSense/", category: "网页游戏", icon: "fa-solid fa-clock",image: "", color: "#3f87e0", desc: "" }
+        ];
+
+        const websitesGrid = document.getElementById('websitesGrid');
+        const categoryTabs = document.getElementById('categoryTabs');
+        const searchInput = document.getElementById('searchInput');
+        const themeToggle = document.getElementById('themeToggle');
+        const addSiteBtn = document.getElementById('addSiteBtn');
+        const siteNameInput = document.getElementById('siteName');
+        const siteUrlInput = document.getElementById('siteUrl');
+        const siteCategoryInput = document.getElementById('siteCategory');
+        const contextMenu = document.getElementById('contextMenu');
+        const pinSite = document.getElementById('pinSite');
+        const deleteSite = document.getElementById('deleteSite');
+
+        let currentCategory = '全部';
+        let customWebsites = JSON.parse(localStorage.getItem('customWebsites')) || [];
+        let pinnedSites = JSON.parse(localStorage.getItem('pinnedSites')) || [];
+        let deletedSites = JSON.parse(localStorage.getItem('deletedSites')) || []; 
+        let currentSite = null; 
+
+        document.addEventListener('contextmenu', (e) => {
+            if (e.target.closest('.website-card')) {
+                e.preventDefault();
+                const card = e.target.closest('.website-card');
+                const siteName = card.querySelector('.website-name').textContent;
+                const allWebsites = getAvailableWebsites();
+                currentSite = allWebsites.find(site => site.name === siteName);
+
+                if (currentSite) {
+                    const rect = card.getBoundingClientRect();
+                    const leftPos = Math.min(rect.left + e.offsetX, window.innerWidth - 190);
+                    const topPos = Math.min(rect.top + e.offsetY, window.innerHeight - 100);
+                    
+                    contextMenu.style.top = `${topPos + window.scrollY}px`;
+                    contextMenu.style.left = `${leftPos + window.scrollX}px`;
+                    contextMenu.classList.add('show');
+
+                    const isPinned = pinnedSites.some(s => s.name === currentSite.name && s.url === currentSite.url);
+                    pinSite.innerHTML = isPinned 
+                        ? '<i class="fas fa-thumbtack"></i> 取消置顶' 
+                        : '<i class="fas fa-thumbtack"></i> 置顶网站';
+                    
+                    deleteSite.classList.remove('disabled');
+                }
+            } else {
+                contextMenu.classList.remove('show');
+                currentSite = null;
+            }
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.context-menu')) {
+                contextMenu.classList.remove('show');
+            }
+        });
+
+        pinSite.addEventListener('click', () => {
+            if (!currentSite) return;
+            
+            const isPinned = pinnedSites.some(s => s.name === currentSite.name && s.url === currentSite.url);
+            
+            if (isPinned) {
+                pinnedSites = pinnedSites.filter(s => !(s.name === currentSite.name && s.url === currentSite.url));
+            } else {
+                pinnedSites.push(currentSite);
+            }
+            
+            localStorage.setItem('pinnedSites', JSON.stringify(pinnedSites));
+            renderWebsites();
+            contextMenu.classList.remove('show');
+        });
+
+        deleteSite.addEventListener('click', () => {
+            if (!currentSite) return;
+            
+            if (confirm(`确定要删除 "${currentSite.name}" 吗？删除后可手动重新添加。`)) {
+                deletedSites.push({
+                    name: currentSite.name,
+                    url: currentSite.url
+                });
+                localStorage.setItem('deletedSites', JSON.stringify(deletedSites));
+                
+                pinnedSites = pinnedSites.filter(s => !(s.name === currentSite.name && s.url === currentSite.url));
+                localStorage.setItem('pinnedSites', JSON.stringify(pinnedSites));
+                
+                customWebsites = customWebsites.filter(s => !(s.name === currentSite.name && s.url === currentSite.url));
+                localStorage.setItem('customWebsites', JSON.stringify(customWebsites));
+                
+                renderCategoryTabs();
+                renderWebsites();
+                contextMenu.classList.remove('show');
+            }
+        });
+
+        function getAvailableWebsites() {
+            const availableOriginal = originalWebsites.filter(site => 
+                !deletedSites.some(d => d.name === site.name && d.url === site.url)
+            );
+            const availableCustom = customWebsites.filter(site => 
+                !deletedSites.some(d => d.name === site.name && d.url === site.url)
+            );
+            
+            return [...availableOriginal, ...availableCustom];
+        }
+
+        function getAllCategories() {
+            const categoriesSet = new Set();
+            categoriesSet.add('全部');
+            
+            const availableWebsites = getAvailableWebsites();
+            availableWebsites.forEach(site => {
+                categoriesSet.add(site.category);
+            });
+            
+            return Array.from(categoriesSet);
+        }
+
+        function renderCategoryTabs() {
+            const categories = getAllCategories();
+            categoryTabs.innerHTML = '';
+            
+            categories.forEach(category => {
+                const tab = document.createElement('div');
+                tab.className = 'tab';
+                if (category === currentCategory) tab.classList.add('active');
+                tab.textContent = category;
+                tab.dataset.category = category;
+                
+                tab.addEventListener('click', () => {
+                    currentCategory = category;
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    tab.classList.add('active');
+                    renderWebsites();
+                });
+                
+                categoryTabs.appendChild(tab);
+            });
+        }
+
+        function renderWebsites() {
+            websitesGrid.innerHTML = '';
+            
+            let allWebsites = getAvailableWebsites();
+            
+            const [pinned, normal] = allWebsites.reduce((acc, site) => {
+                const isPinned = pinnedSites.some(s => s.name === site.name && s.url === site.url);
+                if (isPinned) {
+                    acc[0].push(site);
+                } else {
+                    acc[1].push(site);
+                }
+                return acc;
+            }, [[], []]);
+            
+            allWebsites = [...pinned, ...normal];
+            
+            let filteredWebsites = allWebsites;
+            
+            if (currentCategory !== '全部') {
+                filteredWebsites = allWebsites.filter(site => site.category === currentCategory);
+            }
+            
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            if (searchTerm) {
+                filteredWebsites = filteredWebsites.filter(site => 
+                    site.name.toLowerCase().includes(searchTerm) || 
+                    site.desc.toLowerCase().includes(searchTerm) ||
+                    site.category.toLowerCase().includes(searchTerm)
+                );
+            }
+            
+            filteredWebsites.forEach(site => {
+                const card = document.createElement('a');
+                card.className = 'website-card';
+                if (pinnedSites.some(s => s.name === site.name && s.url === site.url)) {
+                    card.classList.add('pinned');
+                }
+                card.href = site.url;
+                card.target = '_blank';
+                card.rel = 'noopener noreferrer';
+                
+                let iconHtml = '';
+                if (site.image) {
+                    iconHtml = `<img src="${site.image}" alt="${site.name}" style="width: 42px; height: 42px;">`;
+                } else if (site.icon) {
+                    if (site.icon.startsWith('fa-brands')) {
+                        iconHtml = `<i class="${site.icon}"></i>`;
+                    } else if (site.icon.startsWith('fa-solid')) {
+                        iconHtml = `<i class="${site.icon}"></i>`;
+                    } else {
+                        iconHtml = `<i class="fas fa-globe"></i>`;
+                    }
+                } else {
+                    iconHtml = `<i class="fas fa-globe"></i>`;
+                }
+
+                const pinnedBadge = pinnedSites.some(s => s.name === site.name && s.url === site.url) 
+                    ? '<i class="fas fa-thumbtack pinned-badge"></i>' 
+                    : '';
+                
+                card.innerHTML = `
+                    ${pinnedBadge}
+                    <div class="website-icon" style="background-color: ${site.color || '#4a6de5'}">
+                        ${iconHtml}
+                    </div>
+                    <div class="website-name">${site.name}</div>
+                    <div class="website-desc">${site.desc}</div>
+                `;
+                
+                websitesGrid.appendChild(card);
+            });
+            
+            if (filteredWebsites.length === 0) {
+                websitesGrid.innerHTML = `
+                    <div style="grid-column: 1 / -1; text-align: center; padding: 40px; color: #888;">
+                        <i class="fas fa-search" style="font-size: 48px; margin-bottom: 20px;"></i>
+                        <h3>未找到匹配的网站</h3>
+                        <p>尝试修改搜索关键词或选择其他分类</p>
+                    </div>
+                `;
+            }
+        }
+
+        function addCustomSite() {
+            const name = siteNameInput.value.trim();
+            const url = siteUrlInput.value.trim();
+            const category = siteCategoryInput.value.trim() || '自定义';
+            
+            if (!name || !url) {
+                alert('请输入网站名称和网址');
+                return;
+            }
+            
+            let fullUrl = url;
+            if (!url.startsWith('http://') && !url.startsWith('https://')) {
+                fullUrl = 'https://' + url;
+            }
+            
+            try {
+                new URL(fullUrl);
+            } catch (e) {
+                alert('请输入有效的网址');
+                return;
+            }
+            
+            deletedSites = deletedSites.filter(d => !(d.name === name && d.url === fullUrl));
+            localStorage.setItem('deletedSites', JSON.stringify(deletedSites));
+            
+            const newSite = {
+                name,
+                url: fullUrl,
+                category,
+                icon: 'fa-solid fa-star',
+                color: '#FFC107',
+                desc: '自定义网站'
+            };
+            
+            const exists = getAvailableWebsites().some(s => s.name === name && s.url === fullUrl);
+            if (exists) {
+                alert('该网站已存在！');
+                return;
+            }
+            
+            customWebsites.push(newSite);
+            localStorage.setItem('customWebsites', JSON.stringify(customWebsites));
+            
+            siteNameInput.value = '';
+            siteUrlInput.value = '';
+            
+            renderCategoryTabs();
+            renderWebsites();
+            
+            const customTab = document.querySelector('.tab[data-category="自定义"]');
+            if (customTab) {
+                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                customTab.classList.add('active');
+                currentCategory = '自定义';
+                renderWebsites();
+            }
+        }
+
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                document.body.classList.remove('dark-mode');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+                themeToggle.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                localStorage.setItem('theme', 'light');
+                themeToggle.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+        }
+
+        function handleSearch() {
+            renderWebsites();
+        }
+
+        function navigateToUrl(url) {
+            if (!url) return;
+            
+            let fullUrl = url.trim();
+            if (!fullUrl.startsWith('http://') && !fullUrl.startsWith('https://')) {
+                fullUrl = 'https://' + fullUrl;
+            }
+            
+            try {
+                new URL(fullUrl);
+                window.open(fullUrl, '_blank');
+                searchInput.value = '';
+            } catch (e) {
+                handleSearch();
+            }
+        }
+
+        searchInput.addEventListener('input', handleSearch);
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                navigateToUrl(searchInput.value);
+            }
+        });
+        
+        themeToggle.addEventListener('click', toggleTheme);
+        addSiteBtn.addEventListener('click', addCustomSite);
+
+        function init() {
+            initTheme();
+            renderCategoryTabs();
+            renderWebsites();
+        }
+
+        document.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
