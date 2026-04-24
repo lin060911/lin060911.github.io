@@ -68,11 +68,11 @@
         
         .logo i {
             color: var(--primary-color);
-            font-size: 28px;
+            font-size: 18px;
         }
         
         .logo h1 {
-            font-size: 22px;
+            font-size: 14px;
             font-weight: 700;
         }
         
@@ -170,7 +170,7 @@
         
         .websites-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(calc(50% - 8px), 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(calc(33.333% - 8px), 1fr));
             gap: 12px;
             margin-bottom: 20px;
         }
@@ -178,7 +178,7 @@
         .website-card {
             background-color: var(--card-color);
             border-radius: 16px;
-            padding: 16px 8px; 
+            padding: 12px 8px; 
             text-align: center;
             transition: all 0.3s;
             border: 2px solid var(--border-color);
@@ -188,7 +188,7 @@
             color: var(--text-color);
             display: block;
             position: relative;
-            min-height: 110px;
+            min-height: 90px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -200,26 +200,26 @@
         }
         
         .website-icon {
-            width: 44px;
-            height: 44px;
+            width: 38px;
+            height: 38px;
             border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: 0 auto 10px;
-            font-size: 20px;
+            margin: 0 auto 8px;
+            font-size: 18px;
             color: white;
         }
         
         .website-name {
             font-weight: 600;
-            margin-bottom: 4px;
-            font-size: 14px;
+            margin-bottom: 2px;
+            font-size: 13px;
             line-height: 1.2;
         }
         
         .website-desc {
-            font-size: 11px;
+            font-size: 10px;
             color: #888;
             line-height: 1.3;
             padding: 0 4px;
@@ -346,7 +346,7 @@
         
         .context-menu-item:hover {
             background-color: var(--menu-hover);
-            color: white;
+            color: #ffffff;
             padding-left: 16px;
         }
         
@@ -620,16 +620,23 @@
             // 搜索引擎
             { name: "百度", url: "https://www.baidu.com", category: "搜索引擎", icon: "",image: "./images/baidu.png",color: "#ffffff", desc: "中文搜索引擎" },
             { name: "搜狗", url: "https://www.sogou.com", category: "搜索引擎", icon: "",image: "./images/sg.jpg",color: "#ffffff", desc: "综合搜索引擎" },
-            { name: "360搜索", url: "https://www.so.com", category: "搜索引擎", icon: "",image: "./images/360.jpg", color: "#ffffff", desc: "360综合搜索" },
-            // 视频
-            { name: "Bilibili", url: "https://www.bilibili.com", category: "视频", icon: "fa-brands fa-bilibili",image: "", color: "#FB7299", desc: "视频弹幕网站" },
-            { name: "抖音", url: "https://www.douyin.com", category: "视频", icon: "fa-brands fa-tiktok",image: "", color: "#000000", desc: "短视频平台" },
-            { name: "爱奇艺", url: "https://www.iqiyi.com", category: "视频", icon: "",image: "./images/iqiyi.jpg", color: "#ffffff", desc: "综合视频平台" },
-            { name: "腾讯视频", url: "https://v.qq.com", category: "视频", icon: "",image: "./images/txsp.jpg", color: "#ffffff", desc: "腾讯旗下视频平台" },
-            { name: "优酷", url: "https://youku.com", category: "视频", icon: "",image: "./images/yksp.jpg", color: "#ffffff", desc: "阿里旗下视频平台" },
-            { name: "虎牙", url: "https://www.huya.com", category: "视频", icon: "",image: "./images/huya.jpg", color: "#ffffff", desc: "游戏直播平台" },
-            { name: "奈飞工厂", url: "https://www.netflixgc.com/", category: "视频", icon: "",image: "./images/naif.jpg", color: "#ffffff", desc: "非官方免费影视网站" },
-                        
+            // 影音
+            { name: "Bilibili", url: "https://www.bilibili.com", category: "影音", icon: "fa-brands fa-bilibili",image: "", color: "#FB7299", desc: "视频弹幕网站" },
+            { name: "抖音", url: "https://www.douyin.com", category: "影音", icon: "fa-brands fa-tiktok",image: "", color: "#000000", desc: "短视频平台" },
+            { name: "QQ音乐", url: "https://y.qq.com", category: "影音", icon: "",image: "./images/qqyy.jpg", color: "#ffffff", desc: "腾讯旗下音乐平台" },
+            { name: "网易云音乐", url: "https://music.163.com", category: "影音", icon: "",image: "./images/wyy.jpg", color: "#ffffff", desc: "在线音乐平台" },
+            { name: "酷狗音乐", url: "https://www.kugou.com", category: "影音", icon: "",image: "./images/kgyy.jpg", color: "#ffffff", desc: "在线音乐播放平台" },               
+            { name: "爱奇艺", url: "https://www.iqiyi.com", category: "影音", icon: "",image: "./images/iqiyi.jpg", color: "#ffffff", desc: "综合视频平台" },
+            { name: "腾讯视频", url: "https://v.qq.com", category: "影音", icon: "",image: "./images/txsp.jpg", color: "#ffffff", desc: "腾讯旗下视频平台" },
+            { name: "优酷", url: "https://youku.com", category: "影音", icon: "",image: "./images/yksp.jpg", color: "#ffffff", desc: "阿里旗下视频平台" },
+            { name: "虎牙", url: "https://www.huya.com", category: "影音", icon: "",image: "./images/huya.jpg", color: "#ffffff", desc: "游戏直播平台" },
+            { name: "奈飞工厂", url: "https://www.netflixgc.com/", category: "影音", icon: "",image: "./images/naif.jpg", color: "#ffffff", desc: "非官方免费影视网站" },
+            //AI
+            { name: "deepseek", url: "https://www.deepseek.com/", category: "AI", icon: "",image: "./images/deepseek.jpg", color: "#ffffff", desc: "探索未至之境" },
+            { name: "豆包", url: "https://www.doubao.com/", category: "AI", icon: "",image: "./images/doubao.jpg", color: "#ffffff", desc: "字节旗下AI助手" },
+            { name: "元宝", url: "https://yuanbao.tencent.com", category: "AI", icon: "",image: "./images/yuanbao.png", color: "#ffffff", desc: "腾讯旗下AI助手" },
+            { name: "千问", url: "https://www.qianwen.com", category: "AI", icon: "",image: "./images/qianwen.png", color: "#ffffff", desc: "阿里旗下AI助手" },
+
             // 社交
             { name: "微信", url: "https://wx.qq.com", category: "社交", icon: "fa-brands fa-weixin",image: "", color: "#07C160", desc: "即时通讯应用" },
             { name: "QQ", url: "https://im.qq.com", category: "社交", icon: "fa-brands fa-qq",image: "", color: "#12B7F5", desc: "腾讯即时通讯" },
@@ -639,11 +646,7 @@
             { name: "豆瓣", url: "https://www.douban.com", category: "社区", icon: "fa-solid fa-book",image: "", color: "#2E963D", desc: "图书电影社区" },
             { name: "小红书", url: "https://www.xiaohongshu.com", category: "社区", icon: "",image: "./images/xhs.jpg", color: "#FE2C55", desc: "生活方式社区" },
         
-            // 音乐
-            { name: "QQ音乐", url: "https://y.qq.com", category: "音乐", icon: "",image: "./images/qqyy.jpg", color: "#ffffff", desc: "腾讯旗下音乐平台" },
-            { name: "网易云音乐", url: "https://music.163.com", category: "音乐", icon: "",image: "./images/wyy.jpg", color: "#ffffff", desc: "在线音乐平台" },
-            { name: "酷狗音乐", url: "https://www.kugou.com", category: "音乐", icon: "",image: "./images/kgyy.jpg", color: "#ffffff", desc: "在线音乐播放平台" },
-                        
+
             // 购物
             { name: "淘宝/天猫", url: "https://www.taobao.com", category: "购物", icon: "",image: "./images/taobao.jpg", color: "#ffffff", desc: "网络购物平台" },
             { name: "京东", url: "https://www.jd.com", category: "购物", icon: "",image: "./images/jd.jpg", color: "#ffffff", desc: "综合购物网站" },
@@ -667,10 +670,12 @@
             { name: "开源中国", url: "https://www.oschina.net", category: "开发", icon: "fa-solid fa-code",image: "", color: "#F08047", desc: "中文开源社区" },
                      
             // 网页游戏
-            { name: "F1发车反应测试", url: "https://lin060911.github.io/react/", category: "网页游戏", icon: "",image: "./images/f1.jpg", color: " #000000", desc: "" },
-            { name: "色彩大师", url: "https://lin060911.github.io/color/", category: "网页游戏", icon: "fa-solid fa-palette",image: "", color: " #e45369", desc: "" },
-            { name: "反向扫雷", url: "https://lin060911.github.io/deMine/", category: "网页游戏", icon: "fa-solid fa-land-mine-on",image: "", color: "#6ae03f", desc: "" },
-            { name: "时间感测试", url: "https://lin060911.github.io/tSense/", category: "网页游戏", icon: "fa-solid fa-clock",image: "", color: "#3f87e0", desc: "" }
+            { name: "steam", url: "https://store.steampowered.com/", category: "游戏", icon: "fa-brands fa-steam",image: "", color: "#062f9e", desc: "游戏玩家的最终目的地" },
+            { name: "4399", url: "https://www.4399.com/", category: "游戏", icon: "fa-solid fa-gamepad",image: "", color: " #6aa93f", desc: "在线休闲小游戏平台" },
+            { name: "F1发车测试", url: "https://lin060911.github.io/react/", category: "游戏", icon: "",image: "./images/f1.jpg", color: " #000000", desc: "极简反应速度测试" },
+            { name: "色彩大师", url: "https://lin060911.github.io/color/", category: "游戏", icon: "fa-solid fa-palette",image: "", color: " #e45369", desc: "色差辨别挑战" },
+            { name: "反向扫雷", url: "https://lin060911.github.io/deMine/", category: "游戏", icon: "fa-solid fa-land-mine-on",image: "", color: "#6ae03f", desc: "逆向思维逻辑解密" },
+            { name: "时间感测试", url: "https://lin060911.github.io/tSense/", category: "游戏", icon: "fa-solid fa-clock",image: "", color: "#3f87e0", desc: "人体内在时钟校准" }
         ];
 
         const websitesGrid = document.getElementById('websitesGrid');
