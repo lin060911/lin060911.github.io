@@ -15,8 +15,8 @@
         
         :root {
             --primary-color: #4a6de5;
-            --bg-color: #eeeeee;
-            --card-color: #e3e3e3;
+            --bg-color: #fbfbfb;
+            --card-color: #eeeeee;
             --text-color: #333333;
             --border-color: #eaeaea;
             --shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
@@ -78,7 +78,7 @@
         
         .theme-toggle {
             background: var(--card-color);
-            border: 1px solid var(--border-color);
+            border: 4px solid var(--border-color);
             color: var(--text-color);
             width: 40px;
             height: 40px;
@@ -93,6 +93,7 @@
         
         .theme-toggle:hover {
             transform: translateY(-2px);
+            border-color: #4a6de5;
         }
         
         .search-container {
@@ -131,41 +132,57 @@
             color: #999;
             font-size: 16px;
         }
+
+        .search-box input:hover{
+            box-shadow: 0 8px 24px #5c7de9;
+            border-color: #4a6de5;
+        }
         
         .category-tabs {
             display: flex;
             justify-content: flex-start;
-            flex-wrap: nowrap; 
-            gap: 8px; 
-            margin-bottom: 20px; 
-            padding-bottom: 8px;
+            flex-wrap: nowrap;
+            gap: 6px;
+            margin-bottom: 18px;
+            padding-bottom: 4px;
             overflow-x: auto;
             scrollbar-width: none;
             -ms-overflow-style: none;
         }
+
         
         .category-tabs::-webkit-scrollbar {
             display: none;
         }
         
         .tab {
-            padding: 8px 16px;
-            border-radius: 20px; 
+            padding: 6px 14px;
+            border-radius: 18px;
             background-color: var(--card-color);
-            border: 1px solid var(--border-color);
+            border: 2px solid transparent; 
             color: var(--text-color);
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.25s ease;
             font-weight: 500;
-            font-size: 14px;
+            font-size: 13px;
             white-space: nowrap;
             flex-shrink: 0;
+            box-shadow: none;
         }
-        
-        .tab:hover, .tab.active {
+                
+        .tab:hover {
+            background-color: color-mix(in srgb, var(--primary-color) 12%, var(--card-color));
+            color: var(--primary-color);
+            border-color: #4a6de5;
+            box-shadow: 0 8px 24px #5c7de9;
+            transform: translateY(-2px);
+        }
+
+        .tab.active {
             background-color: var(--primary-color);
-            color: white;
-            border-color: var(--primary-color);
+            color: #ffffff;
+            border-color: #4a6de5;
+            box-shadow: 0 2px 8px rgba(74, 109, 229, 0.25);
         }
         
         .websites-grid {
@@ -195,10 +212,11 @@
         }
         
         .website-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px #5c7de9;
+            border-color: #4a6de5;
         }
-        
+
         .website-icon {
             width: 38px;
             height: 38px;
@@ -249,6 +267,11 @@
         .custom-site h3 i {
             color: var(--primary-color);
             font-size: 16px;
+        }
+
+        .custom-site h4 i {
+            color: #f85555;
+            font-size: 18px;
         }
         
         .form-row {
@@ -378,6 +401,18 @@
             font-size: 10px;
             color: var(--primary-color);
         }
+
+        .dark-mode .tab {
+            background-color: var(--card-color);
+        }
+
+        .dark-mode .tab:hover {
+            background-color: color-mix(in srgb, var(--primary-color) 18%, var(--card-color));
+        }
+
+        .dark-mode .tab.active {
+            box-shadow: 0 2px 10px rgba(109, 139, 240, 0.35);
+        }
         
         @media (min-width: 768px) {
             body {
@@ -436,9 +471,12 @@
             }
             
             .tab {
-                padding: 10px 20px;
-                border-radius: 30px;
-                font-size: 16px;
+                padding: 8px 16px;
+                border-radius: 18px;
+                font-size: 14px;
+                border: 3px solid transparent;
+                background-color: var(--card-color);
+                transition: all 0.25s ease;
             }
             
             .websites-grid {
@@ -538,6 +576,7 @@
                 right: 8px;
                 font-size: 12px;
             }
+
         }
         
         @media (min-width: 480px) and (max-width: 767px) {
@@ -596,13 +635,15 @@
                     <label for="siteCategory">分类</label>
                     <input type="text" id="siteCategory" placeholder="搜索引擎" value="自定义">
                 </div>
+
+                    <button class="btn" id="addSiteBtn">添加网站</button>
             </div>
-            <button class="btn" id="addSiteBtn">添加网站</button>
-  
+
+            <h4><i class="fas fa-trash"></i> 右键可删除/置顶网站</h4>  
         </div>
-        
+
         <footer>
-            <p>网站导航 作者:L1Nzy | 快速访问您最常使用的网站</p>
+            <p>网站导航 作者:L1Nzy | 快速访问常用网站</p>
         </footer>
     </div>
 
@@ -635,33 +676,22 @@
             { name: "deepseek", url: "https://www.deepseek.com/", category: "AI", icon: "",image: "./images/deepseek.jpg", color: "#ffffff", desc: "探索未至之境" },
             { name: "豆包", url: "https://www.doubao.com/", category: "AI", icon: "",image: "./images/doubao.jpg", color: "#ffffff", desc: "字节旗下AI助手" },
             { name: "元宝", url: "https://yuanbao.tencent.com", category: "AI", icon: "",image: "./images/yuanbao.png", color: "#ffffff", desc: "腾讯旗下AI助手" },
-            { name: "千问", url: "https://www.qianwen.com", category: "AI", icon: "",image: "./images/qianwen.png", color: "#ffffff", desc: "阿里旗下AI助手" },
-
             // 社交
             { name: "微信", url: "https://wx.qq.com", category: "社交", icon: "fa-brands fa-weixin",image: "", color: "#07C160", desc: "即时通讯应用" },
-            { name: "QQ", url: "https://im.qq.com", category: "社交", icon: "fa-brands fa-qq",image: "", color: "#12B7F5", desc: "腾讯即时通讯" },
             { name: "微博", url: "https://weibo.com", category: "社交", icon: "fa-brands fa-weibo",image: "", color: "#DF2029", desc: "社交媒体平台" },
             // 社区
             { name: "知乎", url: "https://www.zhihu.com", category: "社区", icon: "fa-brands fa-zhihu",image: "", color: "#0084FF", desc: "问答社区" },
-            { name: "豆瓣", url: "https://www.douban.com", category: "社区", icon: "fa-solid fa-book",image: "", color: "#2E963D", desc: "图书电影社区" },
             { name: "小红书", url: "https://www.xiaohongshu.com", category: "社区", icon: "",image: "./images/xhs.jpg", color: "#FE2C55", desc: "生活方式社区" },
-        
-
             // 购物
             { name: "淘宝/天猫", url: "https://www.taobao.com", category: "购物", icon: "",image: "./images/taobao.jpg", color: "#ffffff", desc: "网络购物平台" },
-            { name: "京东", url: "https://www.jd.com", category: "购物", icon: "",image: "./images/jd.jpg", color: "#ffffff", desc: "综合购物网站" },
-            { name: "拼多多", url: "https://www.pinduoduo.com", category: "购物", icon: "",image: "./images/pdd.jpg", color: "#ffffff", desc: "社交电商平台" },
-            
+            { name: "京东", url: "https://www.jd.com", category: "购物", icon: "",image: "./images/jd.jpg", color: "#ffffff", desc: "综合购物网站" },            
             // 学习
             { name: "中国大学MOOC", url: "https://www.icourse163.org", category: "学习", icon: "",image: "./images/mooc.jpg", color: "#ffffff", desc: "在线教育平台" },
-            { name: "超星学习通", url: "https://www.chaoxing.com", category: "学习", icon: "",image: "./images/xxt.jpg", color: "#ffffff", desc: "在线学习平台" },
-            { name: "得到", url: "https://www.dedao.cn", category: "学习", icon: "",image: "./images/dedao.jpg", color: "#ffffff", desc: "知识服务平台" },
-            
+            { name: "超星学习通", url: "https://www.chaoxing.com", category: "学习", icon: "",image: "./images/xxt.jpg", color: "#ffffff", desc: "在线学习平台" },            
 
             // 工具
             { name: "WPS Office", url: "https://www.wps.cn", category: "工具", icon: "fa-solid fa-file-word",image: "", color: "#2B52DF", desc: "办公文档在线协作" },
             { name: "百度网盘", url: "https://pan.baidu.com", category: "工具", icon: "",image: "./images/bdwp.jpg", color: "#ffffff", desc: "云存储与文件分享" },
-            { name: "腾讯微云网盘", url: "https://www.weiyun.com", category: "工具", icon: "",image: "./images/txwy.jpg", color: "#ffffff", desc: "腾讯云存储服务" },
             { name: "腾讯企业网盘", url: "https://pan.tencent.com", category: "工具", icon: "",image: "./images/txy.jpg", color: "#ffffff", desc: "腾讯云存储服务" },
             { name: "钉钉", url: "https://www.dingtalk.com", category: "工具", icon: "",image: "./images/dd.jpg", color: "#ffffff", desc: "企业级通讯工具" },
             { name: "企业微信", url: "https://work.weixin.qq.com", category: "工具", icon: "",image: "./images/qywx.jpg", color: "#ffffff", desc: "企业级办公沟通工具" },
@@ -670,9 +700,9 @@
             { name: "开源中国", url: "https://www.oschina.net", category: "开发", icon: "fa-solid fa-code",image: "", color: "#F08047", desc: "中文开源社区" },
                      
             // 网页游戏
-            { name: "steam", url: "https://store.steampowered.com/", category: "游戏", icon: "fa-brands fa-steam",image: "", color: "#062f9e", desc: "游戏玩家的最终目的地" },
+            { name: "steam", url: "https://store.steampowered.com/", category: "游戏", icon: "fa-brands fa-steam",image: "", color: "#062f9e", desc: "蒸汽平台" },
             { name: "4399", url: "https://www.4399.com/", category: "游戏", icon: "fa-solid fa-gamepad",image: "", color: " #6aa93f", desc: "在线休闲小游戏平台" },
-            { name: "F1发车测试", url: "https://lin060911.github.io/react/", category: "游戏", icon: "",image: "./images/f1.jpg", color: " #000000", desc: "极简反应速度测试" },
+            { name: "反应测试中心", url: "https://lin060911.github.io/react/", category: "游戏", icon: "fa-solid fa-stopwatch",image: "", color: "#1e1e1e", desc: "反应速度测试" },
             { name: "色彩大师", url: "https://lin060911.github.io/color/", category: "游戏", icon: "fa-solid fa-palette",image: "", color: " #e45369", desc: "色差辨别挑战" },
             { name: "反向扫雷", url: "https://lin060911.github.io/deMine/", category: "游戏", icon: "fa-solid fa-land-mine-on",image: "", color: "#6ae03f", desc: "逆向思维逻辑解密" },
             { name: "时间感测试", url: "https://lin060911.github.io/tSense/", category: "游戏", icon: "fa-solid fa-clock",image: "", color: "#3f87e0", desc: "人体内在时钟校准" }
