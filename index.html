@@ -663,56 +663,58 @@
     </div>
 
     <script>
+        const DATA_VERSION = '1';
+
         const originalWebsites = [
             // 搜索引擎
-            { name: "百度", url: "https://www.baidu.com", category: "搜索引擎", icon: "",image: "./images/baidu.png",color: "#ffffff", desc: "中文搜索引擎" },
-            { name: "搜狗", url: "https://www.sogou.com", category: "搜索引擎", icon: "",image: "./images/sg.jpg",color: "#ffffff", desc: "综合搜索引擎" },
+            { id: "baidu", name: "百度", url: "https://www.baidu.com", category: "搜索引擎", icon: "", image: "./images/baidu.png", color: "#ffffff", desc: "中文搜索引擎" },
+            { id: "sogou", name: "搜狗", url: "https://www.sogou.com", category: "搜索引擎", icon: "", image: "./images/sg.jpg", color: "#ffffff", desc: "综合搜索引擎" },
             // 影音
-            { name: "Bilibili", url: "https://www.bilibili.com", category: "影音", icon: "fa-brands fa-bilibili",image: "", color: "#FB7299", desc: "视频弹幕网站" },
-            { name: "抖音", url: "https://www.douyin.com", category: "影音", icon: "fa-brands fa-tiktok",image: "", color: "#000000", desc: "短视频平台" },
-            { name: "QQ音乐", url: "https://y.qq.com", category: "影音", icon: "",image: "./images/qqyy.jpg", color: "#ffffff", desc: "腾讯旗下音乐平台" },
-            { name: "网易云音乐", url: "https://music.163.com", category: "影音", icon: "",image: "./images/wyy.jpg", color: "#ffffff", desc: "在线音乐平台" },
-            { name: "酷狗音乐", url: "https://www.kugou.com", category: "影音", icon: "",image: "./images/kgyy.jpg", color: "#ffffff", desc: "在线音乐播放平台" },               
-            { name: "爱奇艺", url: "https://www.iqiyi.com", category: "影音", icon: "",image: "./images/iqiyi.jpg", color: "#ffffff", desc: "综合视频平台" },
-            { name: "腾讯视频", url: "https://v.qq.com", category: "影音", icon: "",image: "./images/txsp.jpg", color: "#ffffff", desc: "腾讯旗下视频平台" },
-            { name: "优酷", url: "https://youku.com", category: "影音", icon: "",image: "./images/yksp.jpg", color: "#ffffff", desc: "阿里旗下视频平台" },
-            { name: "虎牙", url: "https://www.huya.com", category: "影音", icon: "",image: "./images/huya.jpg", color: "#ffffff", desc: "游戏直播平台" },
-            //AI
-            { name: "deepseek", url: "https://www.deepseek.com/", category: "AI", icon: "",image: "./images/deepseek.jpg", color: "#ffffff", desc: "探索未至之境" },
-            { name: "豆包", url: "https://www.doubao.com/", category: "AI", icon: "",image: "./images/doubao.jpg", color: "#ffffff", desc: "字节旗下AI助手" },
-            { name: "元宝", url: "https://yuanbao.tencent.com", category: "AI", icon: "",image: "./images/yuanbao.png", color: "#ffffff", desc: "腾讯旗下AI助手" },
-            { name: "kimi", url: "https://www.kimi.com", category: "AI", icon: "",image: "./images/kimi.png", color: "#ffffff", desc: "持续处理复杂任务" },
+            { id: "bilibili", name: "Bilibili", url: "https://www.bilibili.com", category: "影音", icon: "fa-brands fa-bilibili", image: "", color: "#FB7299", desc: "视频弹幕网站" },
+            { id: "douyin", name: "抖音", url: "https://www.douyin.com", category: "影音", icon: "fa-brands fa-tiktok", image: "", color: "#000000", desc: "短视频平台" },
+            { id: "qqmusic", name: "QQ音乐", url: "https://y.qq.com", category: "影音", icon: "", image: "./images/qqyy.jpg", color: "#ffffff", desc: "腾讯旗下音乐平台" },
+            { id: "netease-music", name: "网易云音乐", url: "https://music.163.com", category: "影音", icon: "", image: "./images/wyy.jpg", color: "#ffffff", desc: "在线音乐平台" },
+            { id: "kugou", name: "酷狗音乐", url: "https://www.kugou.com", category: "影音", icon: "", image: "./images/kgyy.jpg", color: "#ffffff", desc: "在线音乐播放平台" },
+            { id: "iqiyi", name: "爱奇艺", url: "https://www.iqiyi.com", category: "影音", icon: "", image: "./images/iqiyi.jpg", color: "#ffffff", desc: "综合视频平台" },
+            { id: "tencent-video", name: "腾讯视频", url: "https://v.qq.com", category: "影音", icon: "", image: "./images/txsp.jpg", color: "#ffffff", desc: "腾讯旗下视频平台" },
+            { id: "youku", name: "优酷", url: "https://youku.com", category: "影音", icon: "", image: "./images/yksp.jpg", color: "#ffffff", desc: "阿里旗下视频平台" },
+            { id: "huya", name: "虎牙", url: "https://www.huya.com", category: "影音", icon: "", image: "./images/huya.jpg", color: "#ffffff", desc: "游戏直播平台" },
+            // AI
+            { id: "deepseek", name: "deepseek", url: "https://www.deepseek.com/", category: "AI", icon: "", image: "./images/deepseek.jpg", color: "#ffffff", desc: "探索未至之境" },
+            { id: "doubao", name: "豆包", url: "https://www.doubao.com/", category: "AI", icon: "", image: "./images/doubao.jpg", color: "#ffffff", desc: "字节旗下AI助手" },
+            { id: "yuanbao", name: "元宝", url: "https://yuanbao.tencent.com", category: "AI", icon: "", image: "./images/yuanbao.png", color: "#ffffff", desc: "腾讯旗下AI助手" },
+            { id: "kimi", name: "kimi", url: "https://www.kimi.com", category: "AI", icon: "", image: "./images/kimi.png", color: "#ffffff", desc: "持续处理复杂任务" },
             // 社交
-            { name: "微信", url: "https://wx.qq.com", category: "社交", icon: "fa-brands fa-weixin",image: "", color: "#07C160", desc: "即时通讯应用" },
-            { name: "微博", url: "https://weibo.com", category: "社交", icon: "fa-brands fa-weibo",image: "", color: "#DF2029", desc: "社交媒体平台" },
+            { id: "wechat", name: "微信", url: "https://wx.qq.com", category: "社交", icon: "fa-brands fa-weixin", image: "", color: "#07C160", desc: "即时通讯应用" },
+            { id: "weibo", name: "微博", url: "https://weibo.com", category: "社交", icon: "fa-brands fa-weibo", image: "", color: "#DF2029", desc: "社交媒体平台" },
             // 社区
-            { name: "知乎", url: "https://www.zhihu.com", category: "社区", icon: "fa-brands fa-zhihu",image: "", color: "#0084FF", desc: "问答社区" },
-            { name: "小红书", url: "https://www.xiaohongshu.com", category: "社区", icon: "",image: "./images/xhs.jpg", color: "#FE2C55", desc: "生活方式社区" },
+            { id: "zhihu", name: "知乎", url: "https://www.zhihu.com", category: "社区", icon: "fa-brands fa-zhihu", image: "", color: "#0084FF", desc: "问答社区" },
+            { id: "xiaohongshu", name: "小红书", url: "https://www.xiaohongshu.com", category: "社区", icon: "", image: "./images/xhs.jpg", color: "#FE2C55", desc: "生活方式社区" },
             // 购物
-            { name: "淘宝/天猫", url: "https://www.taobao.com", category: "购物", icon: "",image: "./images/taobao.jpg", color: "#ffffff", desc: "网络购物平台" },
-            { name: "京东", url: "https://www.jd.com", category: "购物", icon: "",image: "./images/jd.jpg", color: "#ffffff", desc: "综合购物网站" },            
+            { id: "taobao", name: "淘宝/天猫", url: "https://www.taobao.com", category: "购物", icon: "", image: "./images/taobao.jpg", color: "#ffffff", desc: "网络购物平台" },
+            { id: "jd", name: "京东", url: "https://www.jd.com", category: "购物", icon: "", image: "./images/jd.jpg", color: "#ffffff", desc: "综合购物网站" },
             // 学习
-            { name: "超星学习通", url: "https://www.chaoxing.com", category: "学习", icon: "",image: "./images/xxt.jpg", color: "#ffffff", desc: "在线学习平台" },            
-
+            { id: "chaoxing", name: "超星学习通", url: "https://www.chaoxing.com", category: "学习", icon: "", image: "./images/xxt.jpg", color: "#ffffff", desc: "在线学习平台" },
             // 工具
-            { name: "WPS Office", url: "https://www.wps.cn", category: "工具", icon: "fa-solid fa-file-word",image: "", color: "#2B52DF", desc: "办公文档在线协作" },
-            { name: "百度网盘", url: "https://pan.baidu.com", category: "工具", icon: "",image: "./images/bdwp.jpg", color: "#ffffff", desc: "云存储与文件分享" },
-            { name: "腾讯企业网盘", url: "https://pan.tencent.com", category: "工具", icon: "",image: "./images/txy.jpg", color: "#ffffff", desc: "腾讯云存储服务" },
-            { name: "钉钉", url: "https://www.dingtalk.com", category: "工具", icon: "",image: "./images/dd.jpg", color: "#ffffff", desc: "企业级通讯工具" },
-            { name: "企业微信", url: "https://work.weixin.qq.com", category: "工具", icon: "",image: "./images/qywx.jpg", color: "#ffffff", desc: "企业级办公沟通工具" },
-               // 开发
-            { name: "GitHub", url: "https://github.com", category: "开发", icon: "fa-brands fa-github",image: "", color: "#333333", desc: "GitHub国内镜像" },
-            { name: "开源中国", url: "https://www.oschina.net", category: "开发", icon: "fa-solid fa-code",image: "", color: "#F08047", desc: "中文开源社区" },
-                     
+            { id: "wps", name: "WPS Office", url: "https://www.wps.cn", category: "工具", icon: "fa-solid fa-file-word", image: "", color: "#2B52DF", desc: "办公文档在线协作" },
+            { id: "baidu-pan", name: "百度网盘", url: "https://pan.baidu.com", category: "工具", icon: "", image: "./images/bdwp.jpg", color: "#ffffff", desc: "云存储与文件分享" },
+            { id: "tencent-pan", name: "腾讯企业网盘", url: "https://pan.tencent.com", category: "工具", icon: "", image: "./images/txy.jpg", color: "#ffffff", desc: "腾讯云存储服务" },
+            { id: "dingtalk", name: "钉钉", url: "https://www.dingtalk.com", category: "工具", icon: "", image: "./images/dd.jpg", color: "#ffffff", desc: "企业级通讯工具" },
+            { id: "wechat-work", name: "企业微信", url: "https://work.weixin.qq.com", category: "工具", icon: "", image: "./images/qywx.jpg", color: "#ffffff", desc: "企业级办公沟通工具" },
+            // 开发
+            { id: "github", name: "GitHub", url: "https://github.com", category: "开发", icon: "fa-brands fa-github", image: "", color: "#333333", desc: "GitHub国内镜像" },
+            { id: "oschina", name: "开源中国", url: "https://www.oschina.net", category: "开发", icon: "fa-solid fa-code", image: "", color: "#F08047", desc: "中文开源社区" },
             // 网页游戏
-            { name: "steam", url: "https://store.steampowered.com/", category: "游戏", icon: "fa-brands fa-steam",image: "", color: "#062f9e", desc: "蒸汽平台" },
-            { name: "4399", url: "https://www.4399.com/", category: "游戏", icon: "fa-solid fa-gamepad",image: "", color: " #6aa93f", desc: "在线休闲小游戏平台" },
-            { name: "反应测试中心", url: "https://lin060911.github.io/react/", category: "游戏", icon: "fa-solid fa-stopwatch",image: "", color: "#1e1e1e", desc: "反应速度测试" },
-            { name: "来一把!", url: "https://lin060911.github.io/1game/", category: "游戏", icon: "fa-solid fa-gamepad",image: "", color: "#4a69e5", desc: "简易双人battle小游戏" },
-            { name: "色彩大师", url: "https://lin060911.github.io/color/", category: "游戏", icon: "fa-solid fa-palette",image: "", color: " #e45369", desc: "色差辨别挑战" },
-            { name: "反向扫雷", url: "https://lin060911.github.io/deMine/", category: "游戏", icon: "fa-solid fa-land-mine-on",image: "", color: "#6ae03f", desc: "逆向思维逻辑解密" },
-            { name: "时间感测试", url: "https://lin060911.github.io/tSense/", category: "游戏", icon: "fa-solid fa-clock",image: "", color: "#3f87e0", desc: "人体内在时钟校准" },
+            { id: "steam", name: "steam", url: "https://store.steampowered.com/", category: "游戏", icon: "fa-brands fa-steam", image: "", color: "#062f9e", desc: "蒸汽平台" },
+            { id: "4399", name: "4399", url: "https://www.4399.com/", category: "游戏", icon: "fa-solid fa-gamepad", image: "", color: " #6aa93f", desc: "在线休闲小游戏平台" },
+            { id: "react-test", name: "反应测试中心", url: "https://lin060911.github.io/react/", category: "游戏", icon: "fa-solid fa-stopwatch", image: "", color: "#1e1e1e", desc: "反应速度测试" },
+            { id: "1game", name: "来一把!", url: "https://lin060911.github.io/1game/", category: "游戏", icon: "fa-solid fa-gamepad", image: "", color: "#4a69e5", desc: "简易双人battle小游戏" },
+            { id: "color-master", name: "色彩大师", url: "https://lin060911.github.io/color/", category: "游戏", icon: "fa-solid fa-palette", image: "", color: " #e45369", desc: "色差辨别挑战" },
+            { id: "demine", name: "反向扫雷", url: "https://lin060911.github.io/deMine/", category: "游戏", icon: "fa-solid fa-land-mine-on", image: "", color: "#6ae03f", desc: "逆向思维逻辑解密" },
+            { id: "tsense", name: "时间感测试", url: "https://lin060911.github.io/tSense/", category: "游戏", icon: "fa-solid fa-clock", image: "", color: "#3f87e0", desc: "人体内在时钟校准" },
         ];
+
+        const originalIds = new Set(originalWebsites.map(s => s.id));
 
         const websitesGrid = document.getElementById('websitesGrid');
         const categoryTabs = document.getElementById('categoryTabs');
@@ -727,18 +729,68 @@
         const deleteSite = document.getElementById('deleteSite');
 
         let currentCategory = '全部';
-        let customWebsites = JSON.parse(localStorage.getItem('customWebsites')) || [];
-        let pinnedSites = JSON.parse(localStorage.getItem('pinnedSites')) || [];
-        let deletedSites = JSON.parse(localStorage.getItem('deletedSites')) || []; 
-        let currentSite = null; 
+
+        function migrateData() {
+            const savedVersion = localStorage.getItem('dataVersion');
+
+            let rawCustom = JSON.parse(localStorage.getItem('customWebsites')) || [];
+            let rawPinned = JSON.parse(localStorage.getItem('pinnedSites')) || [];
+            let rawDeleted = JSON.parse(localStorage.getItem('deletedSites')) || [];
+
+            rawCustom = rawCustom.map(site => {
+                if (!site.id) {
+                    site.id = 'custom_' + btoa(unescape(encodeURIComponent(site.name + site.url))).replace(/[^a-zA-Z0-9]/g, '').slice(0, 16) + '_' + Date.now();
+                }
+                return site;
+            });
+
+            let deletedIds = [];
+            if (rawDeleted.length > 0) {
+                if (typeof rawDeleted[0] === 'string') {
+                    deletedIds = rawDeleted;
+                } else {
+                    rawDeleted.forEach(d => {
+                        const found = originalWebsites.find(s => s.name === d.name && s.url === d.url);
+                        if (found) {
+                            deletedIds.push(found.id);
+                        }
+                    });
+                }
+            }
+
+            if (savedVersion !== DATA_VERSION) {
+                deletedIds = deletedIds.filter(id => !originalIds.has(id));
+            }
+
+            localStorage.setItem('customWebsites', JSON.stringify(rawCustom));
+            localStorage.setItem('pinnedSites', JSON.stringify(rawPinned));
+            localStorage.setItem('deletedSites', JSON.stringify(deletedIds));
+            localStorage.setItem('dataVersion', DATA_VERSION);
+
+            return {
+                customWebsites: rawCustom,
+                pinnedSites: rawPinned,
+                deletedIds: deletedIds
+            };
+        }
+
+        const migrated = migrateData();
+        let customWebsites = migrated.customWebsites;
+        let pinnedSites = migrated.pinnedSites;
+        let deletedIds = migrated.deletedIds;
+        let currentSite = null;
+
+        function saveCustom() { localStorage.setItem('customWebsites', JSON.stringify(customWebsites)); }
+        function savePinned() { localStorage.setItem('pinnedSites', JSON.stringify(pinnedSites)); }
+        function saveDeleted() { localStorage.setItem('deletedSites', JSON.stringify(deletedIds)); }
 
         document.addEventListener('contextmenu', (e) => {
             if (e.target.closest('.website-card')) {
                 e.preventDefault();
                 const card = e.target.closest('.website-card');
-                const siteName = card.querySelector('.website-name').textContent;
+                const siteId = card.dataset.id;
                 const allWebsites = getAvailableWebsites();
-                currentSite = allWebsites.find(site => site.name === siteName);
+                currentSite = allWebsites.find(site => site.id === siteId);
 
                 if (currentSite) {
                     const rect = card.getBoundingClientRect();
@@ -749,7 +801,7 @@
                     contextMenu.style.left = `${leftPos + window.scrollX}px`;
                     contextMenu.classList.add('show');
 
-                    const isPinned = pinnedSites.some(s => s.name === currentSite.name && s.url === currentSite.url);
+                    const isPinned = pinnedSites.some(s => s.id === currentSite.id);
                     pinSite.innerHTML = isPinned 
                         ? '<i class="fas fa-thumbtack"></i> 取消置顶' 
                         : '<i class="fas fa-thumbtack"></i> 置顶网站';
@@ -771,15 +823,15 @@
         pinSite.addEventListener('click', () => {
             if (!currentSite) return;
             
-            const isPinned = pinnedSites.some(s => s.name === currentSite.name && s.url === currentSite.url);
+            const isPinned = pinnedSites.some(s => s.id === currentSite.id);
             
             if (isPinned) {
-                pinnedSites = pinnedSites.filter(s => !(s.name === currentSite.name && s.url === currentSite.url));
+                pinnedSites = pinnedSites.filter(s => s.id !== currentSite.id);
             } else {
                 pinnedSites.push(currentSite);
             }
             
-            localStorage.setItem('pinnedSites', JSON.stringify(pinnedSites));
+            savePinned();
             renderWebsites();
             contextMenu.classList.remove('show');
         });
@@ -787,18 +839,17 @@
         deleteSite.addEventListener('click', () => {
             if (!currentSite) return;
             
-            if (confirm(`确定要删除 "${currentSite.name}" 吗？删除后可手动重新添加。`)) {
-                deletedSites.push({
-                    name: currentSite.name,
-                    url: currentSite.url
-                });
-                localStorage.setItem('deletedSites', JSON.stringify(deletedSites));
+            if (confirm(`确定要删除 "${currentSite.name}" 吗？`)) {
+                if (!deletedIds.includes(currentSite.id)) {
+                    deletedIds.push(currentSite.id);
+                    saveDeleted();
+                }
                 
-                pinnedSites = pinnedSites.filter(s => !(s.name === currentSite.name && s.url === currentSite.url));
-                localStorage.setItem('pinnedSites', JSON.stringify(pinnedSites));
-                
-                customWebsites = customWebsites.filter(s => !(s.name === currentSite.name && s.url === currentSite.url));
-                localStorage.setItem('customWebsites', JSON.stringify(customWebsites));
+                customWebsites = customWebsites.filter(s => s.id !== currentSite.id);
+                saveCustom();
+
+                pinnedSites = pinnedSites.filter(s => s.id !== currentSite.id);
+                savePinned();
                 
                 renderCategoryTabs();
                 renderWebsites();
@@ -808,10 +859,10 @@
 
         function getAvailableWebsites() {
             const availableOriginal = originalWebsites.filter(site => 
-                !deletedSites.some(d => d.name === site.name && d.url === site.url)
+                !deletedIds.includes(site.id)
             );
             const availableCustom = customWebsites.filter(site => 
-                !deletedSites.some(d => d.name === site.name && d.url === site.url)
+                !deletedIds.includes(site.id)
             );
             
             return [...availableOriginal, ...availableCustom];
@@ -857,7 +908,7 @@
             let allWebsites = getAvailableWebsites();
             
             const [pinned, normal] = allWebsites.reduce((acc, site) => {
-                const isPinned = pinnedSites.some(s => s.name === site.name && s.url === site.url);
+                const isPinned = pinnedSites.some(s => s.id === site.id);
                 if (isPinned) {
                     acc[0].push(site);
                 } else {
@@ -869,7 +920,6 @@
             allWebsites = [...pinned, ...normal];
             
             let filteredWebsites = allWebsites;
-            
             if (currentCategory !== '全部') {
                 filteredWebsites = allWebsites.filter(site => site.category === currentCategory);
             }
@@ -886,7 +936,8 @@
             filteredWebsites.forEach(site => {
                 const card = document.createElement('a');
                 card.className = 'website-card';
-                if (pinnedSites.some(s => s.name === site.name && s.url === site.url)) {
+                card.dataset.id = site.id;
+                if (pinnedSites.some(s => s.id === site.id)) {
                     card.classList.add('pinned');
                 }
                 card.href = site.url;
@@ -908,7 +959,7 @@
                     iconHtml = `<i class="fas fa-globe"></i>`;
                 }
 
-                const pinnedBadge = pinnedSites.some(s => s.name === site.name && s.url === site.url) 
+                const pinnedBadge = pinnedSites.some(s => s.id === site.id) 
                     ? '<i class="fas fa-thumbtack pinned-badge"></i>' 
                     : '';
                 
@@ -956,11 +1007,11 @@
                 alert('请输入有效的网址');
                 return;
             }
-            
-            deletedSites = deletedSites.filter(d => !(d.name === name && d.url === fullUrl));
-            localStorage.setItem('deletedSites', JSON.stringify(deletedSites));
+
+            const customId = 'custom_' + btoa(unescape(encodeURIComponent(name + fullUrl))).replace(/[^a-zA-Z0-9]/g, '').slice(0, 20) + '_' + Date.now();
             
             const newSite = {
+                id: customId,
                 name,
                 url: fullUrl,
                 category,
@@ -974,9 +1025,12 @@
                 alert('该网站已存在！');
                 return;
             }
+
+            deletedIds = deletedIds.filter(id => id !== customId);
+            saveDeleted();
             
             customWebsites.push(newSite);
-            localStorage.setItem('customWebsites', JSON.stringify(customWebsites));
+            saveCustom();
             
             siteNameInput.value = '';
             siteUrlInput.value = '';
