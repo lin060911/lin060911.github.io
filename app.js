@@ -38,7 +38,6 @@ const PRESET_ICONS = [
     { icon: 'fas fa-clock', label: '时钟' },
     { icon: 'fas fa-envelope', label: '邮件' },
     { icon: 'fas fa-print', label: '打印' },
-    { icon: 'fas fa-scanner', label: '扫描' },
     { icon: 'fas fa-comments', label: '聊天' },
     { icon: 'fas fa-users', label: '群组' },
     { icon: 'fas fa-user', label: '用户' },
@@ -57,7 +56,7 @@ const PRESET_ICONS = [
     { icon: 'fas fa-bug', label: '调试' },
     { icon: 'fas fa-laptop-code', label: '编程' },
     { icon: 'fas fa-server', label: '服务器' },
-    { icon: 'fas fa-github', label: 'GitHub' },
+    { icon: 'fa-brands fa-github', label: 'GitHub' },
     { icon: 'fas fa-gamepad', label: '手柄' },
     { icon: 'fas fa-dice', label: '骰子' },
     { icon: 'fas fa-puzzle-piece', label: '拼图' },
@@ -113,16 +112,15 @@ const originalWebsites = [
     { id:"oschina",name:"开源中国",url:"https://www.oschina.net",category:"开发",icon:"fa-solid fa-code",image:"",color:"#F08047",iconColor:"#ffffff",desc:"中文开源社区" },
     { id:"steam",name:"steam",url:"https://store.steampowered.com/",category:"游戏",icon:"fa-brands fa-steam",image:"",color:"#062f9e",iconColor:"#ffffff",desc:"蒸汽平台" },
     { id:"4399",name:"4399",url:"https://www.4399.com/",category:"游戏",icon:"fa-solid fa-gamepad",image:"",color:"#6aa93f",iconColor:"#ffffff",desc:"在线休闲小游戏平台" },
-    { id:"react-test",name:"反应测试中心",url:"https://lin060911.github.io/react/",category:"游戏",icon:"fa-solid fa-stopwatch",image:"",color:"#1e1e1e",iconColor:"#ffffff",desc:"反应速度测试" },
+    { id:"react-test",name:"反应测试中心",url:"https://lin060911.github.io/react/",category:"游戏",icon:"",image:"./images/react.png",color:"#1e1e1e",iconColor:"#ffffff",desc:"反应速度测试" },
     { id:"1game",name:"来一把!",url:"https://lin060911.github.io/1game/",category:"游戏",icon:"",image:"./images/1game.png",color:"#4a69e5",iconColor:"#ffffff",desc:"简易双人battle小游戏" },
-    { id:"color-master",name:"色彩大师",url:"https://lin060911.github.io/color/",category:"游戏",icon:"",image:"./images/color.png",color:"#e45369",iconColor:"#ffffff",desc:"色差辨别挑战" },
+    { id:"color-master",name:"色彩大师",url:"https://lin060911.github.io/color/",category:"游戏",icon:"",image:"./images/color.png",color:"#d86e7d",iconColor:"#ffffff",desc:"色差辨别挑战" },
     { id:"demine",name:"反向扫雷",url:"https://lin060911.github.io/deMine/",category:"游戏",icon:"",image:"./images/bomb.png",color:"#6ae03f",iconColor:"#ffffff",desc:"逆向思维逻辑解密" },
     { id:"tsense",name:"时间感测试",url:"https://lin060911.github.io/tSense/",category:"游戏",icon:"fa-solid fa-clock",image:"",color:"#3f87e0",iconColor:"#ffffff",desc:"人体内在时钟校准" },
 ];
 
 const originalIds = new Set(originalWebsites.map(s => s.id));
 
-// DOM 引用
 const websitesGrid = document.getElementById('websitesGrid');
 const categoryTabs = document.getElementById('categoryTabs');
 const searchInput = document.getElementById('searchInput');
@@ -156,7 +154,6 @@ const engineTriggerIcon = document.getElementById('engineTriggerIcon');
 const engineTriggerName = document.getElementById('engineTriggerName');
 const engineMenu = document.getElementById('engineMenu');
 
-// 全局状态
 let currentCategory = '全部';
 let currentEngine = SEARCH_ENGINES[0];
 let selectedIcon = null;
@@ -166,7 +163,6 @@ let editingSiteId = null;
 let suggestionIndex = -1;
 let currentSite = null;
 
-/* ========== 数据迁移 & 持久化 ========== */
 function migrateData() {
     const savedVersion = localStorage.getItem('dataVersion');
     let rawCustom = JSON.parse(localStorage.getItem('customWebsites')) || [];
@@ -216,7 +212,6 @@ function saveCustom() { localStorage.setItem('customWebsites', JSON.stringify(cu
 function savePinned() { localStorage.setItem('pinnedSites', JSON.stringify(pinnedSites)); }
 function saveDeleted() { localStorage.setItem('deletedSites', JSON.stringify(deletedIds)); }
 
-/* ========== Toast 提示 ========== */
 let toastTimer;
 function showToast(msg, type = 'info') {
     toast.className = `toast ${type}`;
@@ -227,7 +222,6 @@ function showToast(msg, type = 'info') {
     toastTimer = setTimeout(() => toast.classList.remove('show'), 2500);
 }
 
-/* ========== 搜索引擎 ========== */
 function getEngineFallbackSVG(engine) {
     const svg = ENGINE_FALLBACK[engine.fallbackKey || engine.key];
     return svg || `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>`;
@@ -295,7 +289,6 @@ function initSearchEngine() {
     renderEngineDropdown();
 }
 
-/* ========== 搜索建议 ========== */
 function getSuggestions(query) {
     if (!query) return { sites: [], isUrl: false };
     const q = query.toLowerCase().trim();
@@ -383,7 +376,6 @@ function activateSuggestion() {
     searchInput.value = '';
 }
 
-/* ========== 分类下拉 + 输入框（简单方案） ========== */
 function getAvailableCategories() {
     const set = new Set();
     getAvailableWebsites().forEach(site => set.add(site.category));
@@ -402,7 +394,6 @@ function populateCategorySelect(selectedValue) {
     const currentVal = selectedValue || siteCategorySelect.value || '';
     const cats = getAvailableCategories();
 
-    // 如果当前值不在列表中，先保存它
     let extraVal = '';
     if (currentVal && !cats.includes(currentVal)) {
         extraVal = currentVal;
@@ -410,7 +401,6 @@ function populateCategorySelect(selectedValue) {
 
     siteCategorySelect.innerHTML = '';
 
-    // 默认空选项
     const emptyOpt = document.createElement('option');
     emptyOpt.value = '';
     emptyOpt.textContent = '— 选择分类 —';
@@ -423,7 +413,6 @@ function populateCategorySelect(selectedValue) {
         siteCategorySelect.appendChild(opt);
     });
 
-    // 如果有额外值（自定义输入的分类），也加入
     if (extraVal) {
         const opt = document.createElement('option');
         opt.value = extraVal;
@@ -431,7 +420,6 @@ function populateCategorySelect(selectedValue) {
         siteCategorySelect.appendChild(opt);
     }
 
-    // 恢复选中值
     if (currentVal) {
         siteCategorySelect.value = currentVal;
     }
@@ -440,32 +428,26 @@ function populateCategorySelect(selectedValue) {
 function initCategoryCombo() {
     populateCategorySelect();
 
-    // 下拉选择变化时 → 同步到输入框
     siteCategorySelect.addEventListener('change', () => {
         const val = siteCategorySelect.value;
         siteCategoryInput.value = val;
         if (val) showToast(`分类已选择「${val}」`, 'info');
     });
 
-    // 输入框变化时 → 如果匹配已有分类则同步下拉
     siteCategoryInput.addEventListener('input', () => {
         const val = siteCategoryInput.value.trim();
-        // 如果输入的值在选项里，选中它
         const opts = Array.from(siteCategorySelect.options).map(o => o.value);
         if (opts.includes(val)) {
             siteCategorySelect.value = val;
         } else {
-            // 不在列表里，选中空
             siteCategorySelect.value = '';
         }
     });
 
-    // 输入框回车时提示
     siteCategoryInput.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') {
             const val = siteCategoryInput.value.trim();
             if (val) {
-                // 确保下拉列表包含这个值
                 const opts = Array.from(siteCategorySelect.options).map(o => o.value);
                 if (!opts.includes(val)) {
                     const opt = document.createElement('option');
@@ -482,14 +464,12 @@ function initCategoryCombo() {
     });
 }
 
-// 获取最终分类值（优先输入框，其次下拉）
 function getSelectedCategory() {
     const inputVal = siteCategoryInput.value.trim();
     if (inputVal) return inputVal;
     return siteCategorySelect.value.trim() || '其他';
 }
 
-/* ========== 图标选择器 ========== */
 function updateLivePreview() {
     const iconClass = selectedIcon ? selectedIcon.icon : 'fas fa-icons';
     const iconHTML = `<i class="${iconClass}"></i>`;
@@ -557,7 +537,6 @@ function initIconPicker() {
     });
 }
 
-/* ========== 右键菜单 ========== */
 document.addEventListener('contextmenu', (e) => {
     if (e.target.closest('.website-card')) {
         e.preventDefault();
@@ -586,7 +565,6 @@ document.addEventListener('click', (e) => {
     if (!e.target.closest('.search-bar')) searchSuggestions.classList.remove('show');
 });
 
-/* ========== 置顶 / 编辑 / 删除 ========== */
 pinSite.addEventListener('click', () => {
     if (!currentSite) return;
     const isPinned = pinnedSites.some(s => s.id === currentSite.id);
@@ -651,7 +629,6 @@ deleteSite.addEventListener('click', () => {
     }
 });
 
-/* ========== 数据获取 & 渲染 ========== */
 function getAvailableWebsites() {
     return [...originalWebsites, ...customWebsites].filter(site => !deletedIds.includes(site.id));
 }
@@ -721,7 +698,6 @@ function renderWebsites() {
     });
 }
 
-/* ========== 添加/编辑表单 ========== */
 function resetAddForm() {
     siteNameInput.value = '';
     siteUrlInput.value = '';
@@ -778,7 +754,6 @@ function addOrEditCustomSite() {
     }
 }
 
-/* ========== 主题切换 ========== */
 function initTheme() { setTheme(localStorage.getItem('theme') || 'light', true); }
 
 function setTheme(mode, silent = false) {
@@ -796,7 +771,6 @@ function setTheme(mode, silent = false) {
 
 function toggleTheme() { setTheme(document.body.classList.contains('dark-mode') ? 'light' : 'dark'); }
 
-/* ========== 折叠面板 ========== */
 function initCollapsiblePanel() {
     if (localStorage.getItem('panelCollapsed') === 'true') {
         customBody.classList.add('collapsed');
@@ -810,7 +784,6 @@ function initCollapsiblePanel() {
     });
 }
 
-/* ========== 重置数据 ========== */
 function resetAllData() {
     if (!confirm('确定要重置所有数据吗？这将恢复默认网站列表，删除所有自定义网站。')) return;
     localStorage.removeItem('customWebsites');
@@ -821,7 +794,6 @@ function resetAllData() {
     setTimeout(() => location.reload(), 1200);
 }
 
-/* ========== 初始化 ========== */
 function init() {
     initTheme();
     initSearchEngine();
