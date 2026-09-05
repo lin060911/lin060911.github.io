@@ -8,10 +8,10 @@ const ENGINE_FALLBACK = {
 };
 
 const SEARCH_ENGINES = [
-    { name: '百度', key: 'baidu', url: 'https://www.baidu.com/s?wd={query}', icon: 'https://www.baidu.com/favicon.ico', color: '#2932e1', fallbackKey: 'baidu' },
-    { name: '必应', key: 'bing', url: 'https://www.bing.com/search?q={query}', icon: 'https://www.bing.com/favicon.ico', color: '#00897B', fallbackKey: 'bing' },
-    { name: '搜狗', key: 'sogou', url: 'https://www.sogou.com/web?query={query}', icon: 'https://www.sogou.com/favicon.ico', color: '#ff6a00', fallbackKey: 'sogou' },
-    { name: '360', key: '360', url: 'https://www.so.com/s?q={query}', icon: 'https://www.so.com/favicon.ico', color: '#12bc64', fallbackKey: '360' },
+    { name: '百度', key: 'baidu', url: 'https://www.baidu.com/s?wd={query}', icon: './images/baidu.png', color: '#f0f0f0', fallbackKey: 'baidu' },
+    { name: '必应', key: 'bing', url: 'https://www.bing.com/search?q={query}', icon: 'https://www.bing.com/favicon.ico', color: '#dff1ff', fallbackKey: 'bing' },
+    { name: '搜狗', key: 'sogou', url: 'https://www.sogou.com/web?query={query}', icon: 'https://www.sogou.com/favicon.ico', color: '#fff7e7', fallbackKey: 'sogou' },
+    { name: '360', key: '360', url: 'https://www.so.com/s?q={query}', icon: 'https://www.so.com/favicon.ico', color: '#e3fff0', fallbackKey: '360' },
 ];
 
 const PRESET_ICONS = [
@@ -79,6 +79,29 @@ const PRESET_ICONS = [
 ];
 
 const PRESET_CATEGORIES = ['搜索引擎', '影音', 'AI', '社交', '社区', '购物', '学习', '工具', '开发', '游戏', '设计', '生活'];
+
+const COLOR_PALETTE = [
+    { hex: '#FFFFFF', name: '白' },
+    { hex: '#A0AEC0', name: '灰' },
+    { hex: '#718096', name: '深灰' },
+    { hex: '#2D3748', name: '墨黑' },
+    { hex: '#000000', name: '纯黑' },
+    { hex: '#E45369', name: '玫瑰' },
+    { hex: '#DF2029', name: '正红' },
+    { hex: '#FB7299', name: '粉' },
+    { hex: '#FE2C55', name: '玫红' },
+    { hex: '#FF9800', name: '橙' },
+    { hex: '#FFC107', name: '琥珀' },
+    { hex: '#6AA93F', name: '草绿' },
+    { hex: '#07C160', name: '翠绿' },
+    { hex: '#00BCD4', name: '青' },
+    { hex: '#0084FF', name: '天蓝' },
+    { hex: '#3F87E0', name: '湖蓝' },
+    { hex: '#4A6DE5', name: '主题蓝' },
+    { hex: '#2932E1', name: '靛蓝' },
+    { hex: '#9C27B0', name: '紫' },
+    { hex: '#795548', name: '棕' },
+];
 
 const originalWebsites = [
     { id:"baidu",name:"百度",url:"https://www.baidu.com",category:"搜索引擎",icon:"",image:"./images/baidu.png",color:"#ffffff",iconColor:"#ffffff",desc:"中文搜索引擎" },
@@ -498,40 +521,85 @@ function renderIconGrid() {
         el.title = preset.label;
         el.addEventListener('click', () => {
             selectedIcon = preset;
-            iconGrid.querySelectorAll('.icon-option').forEach(o => o.classList.remove('selected'));
-            el.classList.add('selected');
+            markSelectedIconOption();
             updateLivePreview();
         });
         iconGrid.appendChild(el);
     });
+    markSelectedIconOption();
+}
+
+function markSelectedIconOption() {
+    iconGrid.querySelectorAll('.icon-option').forEach(o => o.classList.remove('selected'));
+    if (!selectedIcon) return;
+    const idx = PRESET_ICONS.findIndex(p => p.icon === selectedIcon.icon);
+    if (idx >= 0) iconGrid.children[idx].classList.add('selected');
+}
+
+let colorPalette = COLOR_PALETTE.slice();
+
+function ensurePaletteColor(color) {
+    if (!color) return false;
+    const upper = String(color).toUpperCase();
+    if (colorPalette.some(c => c.hex.toUpperCase() === upper)) return false;
+    colorPalette.push({ hex: color, name: '自定义' });
+    return true;
+}
+
+function renderColorPalettes() {
+    [['#iconColorRow', 'icon'], ['#bgColorRow', 'bg']].forEach(([selector, target]) => {
+        const row = document.querySelector(selector);
+        if (!row) return;
+        row.querySelectorAll('.color-dot').forEach(d => d.remove());
+        colorPalette.forEach(c => {
+            const dot = document.createElement('div');
+            dot.className = 'color-dot';
+            dot.dataset.target = target;
+            dot.dataset.color = c.hex;
+            dot.style.background = c.hex;
+            dot.title = `${c.name} ${c.hex}`;
+            row.appendChild(dot);
+        });
+    });
+    syncColorDots();
+    refreshPanelHeight();
+}
+
+function syncColorDots() {
+    document.querySelectorAll('.color-dot').forEach(d => {
+        const current = d.dataset.target === 'icon' ? selectedIconColor : selectedBgColor;
+        d.classList.toggle('selected', d.dataset.color.toUpperCase() === String(current || '').toUpperCase());
+    });
+}
+
+function syncColorUI() {
+    const iconAdded = ensurePaletteColor(selectedIconColor);
+    const bgAdded = ensurePaletteColor(selectedBgColor);
+    if (iconAdded || bgAdded) renderColorPalettes();
+    else syncColorDots();
 }
 
 function initIconPicker() {
+    renderColorPalettes();
     renderIconGrid();
     updateLivePreview();
     iconPickerTrigger.addEventListener('click', (e) => {
         e.stopPropagation();
         const isOpen = iconPickerPanel.classList.toggle('show');
         iconPickerTrigger.classList.toggle('open', isOpen);
+        refreshPanelHeight();
     });
-    document.querySelectorAll('.color-dot').forEach(dot => {
-        dot.addEventListener('click', (e) => {
+    ['#iconColorRow', '#bgColorRow'].forEach(selector => {
+        const row = document.querySelector(selector);
+        if (!row) return;
+        row.addEventListener('click', (e) => {
+            const dot = e.target.closest('.color-dot');
+            if (!dot) return;
             e.stopPropagation();
-            const target = dot.dataset.target;
-            const color = dot.dataset.color;
-            if (target === 'icon') {
-                selectedIconColor = color;
-                document.querySelectorAll('#iconColorRow .color-dot').forEach(d => d.classList.remove('selected'));
-            } else {
-                selectedBgColor = color;
-                document.querySelectorAll('#bgColorRow .color-dot').forEach(d => d.classList.remove('selected'));
-            }
-            dot.classList.add('selected');
+            if (dot.dataset.target === 'icon') selectedIconColor = dot.dataset.color;
+            else selectedBgColor = dot.dataset.color;
+            syncColorUI();
             renderIconGrid();
-            if (selectedIcon) {
-                const idx = PRESET_ICONS.findIndex(p => p.icon === selectedIcon.icon);
-                if (idx >= 0) iconGrid.children[idx].classList.add('selected');
-            }
             updateLivePreview();
         });
     });
@@ -560,7 +628,13 @@ document.addEventListener('contextmenu', (e) => {
 
 document.addEventListener('click', (e) => {
     if (!e.target.closest('.context-menu')) contextMenu.classList.remove('show');
-    if (!e.target.closest('.icon-picker-container')) { iconPickerPanel.classList.remove('show'); iconPickerTrigger.classList.remove('open'); }
+    if (!e.target.closest('.icon-picker-container')) {
+        if (iconPickerPanel.classList.contains('show')) {
+            iconPickerPanel.classList.remove('show');
+            iconPickerTrigger.classList.remove('open');
+            refreshPanelHeight();
+        }
+    }
     if (!e.target.closest('.engine-dropdown')) closeEngineMenu();
     if (!e.target.closest('.search-bar')) searchSuggestions.classList.remove('show');
 });
@@ -596,19 +670,13 @@ editSite.addEventListener('click', () => {
     }
     if (currentSite.iconColor) selectedIconColor = currentSite.iconColor;
     if (currentSite.color) selectedBgColor = currentSite.color;
-    document.querySelectorAll('.color-dot').forEach(d => {
-        const t = d.dataset.target, c = d.dataset.color;
-        if (t === 'icon') d.classList.toggle('selected', c === selectedIconColor);
-        if (t === 'bg') d.classList.toggle('selected', c === selectedBgColor);
-    });
+    syncColorUI();
     renderIconGrid();
-    if (selectedIcon) { const idx = PRESET_ICONS.findIndex(p => p.icon === selectedIcon.icon); if (idx >= 0) iconGrid.children[idx].classList.add('selected'); }
     updateLivePreview();
     editingSiteId = currentSite.id;
     addSiteBtn.innerHTML = '<i class="fas fa-save"></i> 保存修改';
     showToast('正在编辑，修改后点击保存', 'info');
-    customBody.classList.remove('collapsed');
-    customHeader.classList.remove('collapsed');
+    setPanelCollapsed(false);
     document.querySelector('.custom-site').scrollIntoView({ behavior: 'smooth', block: 'center' });
     contextMenu.classList.remove('show');
 });
@@ -707,11 +775,7 @@ function resetAddForm() {
     selectedIcon = null;
     selectedIconColor = '#ffffff';
     selectedBgColor = '#4a6de5';
-    document.querySelectorAll('.color-dot').forEach(d => {
-        const t = d.dataset.target, c = d.dataset.color;
-        if (t === 'icon') d.classList.toggle('selected', c === '#ffffff');
-        if (t === 'bg') d.classList.toggle('selected', c === '#4a6de5');
-    });
+    syncColorUI();
     renderIconGrid();
     updateLivePreview();
     selectedIconName.textContent = '点击选择预设图标';
@@ -771,16 +835,42 @@ function setTheme(mode, silent = false) {
 
 function toggleTheme() { setTheme(document.body.classList.contains('dark-mode') ? 'light' : 'dark'); }
 
-function initCollapsiblePanel() {
-    if (localStorage.getItem('panelCollapsed') === 'true') {
+function refreshPanelHeight() {
+    if (customBody.classList.contains('collapsed')) return;
+    customBody.style.maxHeight = 'none';
+    const h = customBody.scrollHeight;
+    customBody.style.maxHeight = (h > 0 ? h + 40 : 3000) + 'px';
+}
+
+function setPanelCollapsed(collapsed) {
+    if (collapsed) {
+        customBody.style.maxHeight = customBody.scrollHeight + 'px';
+        requestAnimationFrame(() => { customBody.style.maxHeight = '0px'; });
         customBody.classList.add('collapsed');
         customHeader.classList.add('collapsed');
+    } else {
+        customBody.classList.remove('collapsed');
+        customHeader.classList.remove('collapsed');
+        refreshPanelHeight();
     }
+    localStorage.setItem('panelCollapsed', collapsed ? 'true' : 'false');
+}
+
+function initCollapsiblePanel() {
+    const collapsed = localStorage.getItem('panelCollapsed') === 'true';
+    customBody.classList.toggle('collapsed', collapsed);
+    customHeader.classList.toggle('collapsed', collapsed);
+    refreshPanelHeight();
+
     customHeader.addEventListener('click', (e) => {
-        if (e.target !== customHeader && !e.target.closest('h3')) return;
-        customBody.classList.toggle('collapsed');
-        customHeader.classList.toggle('collapsed');
-        localStorage.setItem('panelCollapsed', customBody.classList.contains('collapsed'));
+        if (!e.target.closest('h3') && !e.target.closest('.toggle-icon') && e.target !== customHeader) return;
+        setPanelCollapsed(!customBody.classList.contains('collapsed'));
+    });
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(refreshPanelHeight, 150);
     });
 }
 

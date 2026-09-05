@@ -69,7 +69,6 @@ body {
     margin: 0 auto;
 }
 
-/* ========== Header ========== */
 header {
     display: flex;
     justify-content: space-between;
@@ -156,7 +155,6 @@ header {
     box-shadow: var(--shadow);
 }
 
-/* ========== Search Bar ========== */
 .search-container {
     margin-bottom: 24px;
 }
@@ -372,7 +370,6 @@ header {
     display: flex;
 }
 
-/* ========== Search Suggestions ========== */
 .search-suggestions {
     position: absolute;
     top: calc(100% + 8px);
@@ -490,7 +487,6 @@ header {
     color: var(--primary-color);
 }
 
-/* ========== Category Tabs ========== */
 .category-tabs {
     display: flex;
     justify-content: flex-start;
@@ -556,18 +552,17 @@ header {
     color: #fff;
 }
 
-/* ========== Websites Grid ========== */
 .websites-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(calc(33.333% - 10px), 1fr));
-    gap: 12px;
-    margin-bottom: 24px;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    margin-bottom: 20px;
 }
 
 .website-card {
     background-color: var(--card-color);
-    border-radius: var(--radius);
-    padding: 16px 12px;
+    border-radius: 10px;
+    padding: 10px 6px;
     text-align: center;
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     border: 2px solid var(--border-color);
@@ -579,7 +574,9 @@ header {
     flex-direction: column;
     justify-content: center;
     position: relative;
-    min-height: 100px;
+    min-height: 86px;
+    min-width: 0;
+    overflow: hidden;
 }
 
 .website-card:hover {
@@ -598,14 +595,14 @@ header {
 }
 
 .website-icon {
-    width: 42px;
-    height: 42px;
-    border-radius: 12px;
+    width: 32px;
+    height: 32px;
+    border-radius: 9px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 10px;
-    font-size: 18px;
+    margin: 0 auto 6px;
+    font-size: 15px;
     color: white;
     box-shadow: 0 3px 10px rgba(0,0,0,0.1);
     overflow: hidden;
@@ -623,34 +620,39 @@ header {
 
 .website-name {
     font-weight: 600;
-    margin-bottom: 3px;
-    font-size: 13px;
+    margin-bottom: 2px;
+    font-size: 11px;
     line-height: 1.3;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .website-desc {
-    font-size: 11px;
+    font-size: 9.5px;
     color: var(--text-secondary);
-    line-height: 1.4;
-    padding: 0 4px;
+    line-height: 1.3;
+    padding: 0 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .pinned-badge {
     position: absolute;
-    top: 8px;
-    right: 8px;
-    font-size: 10px;
+    top: 4px;
+    right: 4px;
+    font-size: 8px;
     color: var(--primary-color);
     background: rgba(74, 109, 229, 0.1);
-    width: 22px;
-    height: 22px;
+    width: 16px;
+    height: 16px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-/* ========== Custom Site Panel ========== */
 .custom-site {
     background-color: var(--card-color);
     border-radius: 18px;
@@ -693,7 +695,8 @@ header {
 
 .custom-site-body {
     overflow: hidden;
-    transition: max-height 0.4s ease, opacity 0.3s ease;
+    transition: max-height 0.35s cubic-bezier(0.4, 0, 1, 1), 
+                opacity 0.25s ease;
     max-height: 2000px;
     opacity: 1;
 }
@@ -701,6 +704,8 @@ header {
 .custom-site-body.collapsed {
     max-height: 0;
     opacity: 0;
+    transition: max-height 0.35s cubic-bezier(0.4, 0, 1, 1), 
+                opacity 0.25s ease;
 }
 
 .form-row {
@@ -740,7 +745,6 @@ header {
     box-shadow: 0 0 0 3px rgba(74, 109, 229, 0.08);
 }
 
-/* ========== Category Select + Input (Simple) ========== */
 .category-input-group {
     display: flex;
     gap: 8px;
@@ -794,7 +798,6 @@ header {
     font-size: 13px;
 }
 
-/* ========== Icon Picker ========== */
 .icon-picker-container {
     margin-bottom: 14px;
 }
@@ -947,7 +950,7 @@ header {
     transition: filter 0.15s ease, outline-color 0.15s ease;
     outline: 2px solid transparent;
     outline-offset: 2px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.15);
+    box-shadow: inset 0 0 0 1px rgba(127, 127, 127, 0.45), 0 1px 3px rgba(0,0,0,0.15);
 }
 
 .color-dot:hover {
@@ -988,7 +991,6 @@ header {
     color: #fff;
 }
 
-/* ========== Buttons ========== */
 .btn {
     padding: 13px 24px;
     background: var(--primary-gradient);
@@ -1034,7 +1036,6 @@ header {
     font-size: 13px;
 }
 
-/* ========== Footer ========== */
 footer {
     text-align: center;
     padding: 20px 0;
@@ -1044,7 +1045,6 @@ footer {
     margin-top: 10px;
 }
 
-/* ========== Context Menu ========== */
 .context-menu {
     position: absolute;
     width: 170px;
@@ -1094,7 +1094,6 @@ footer {
     text-align: center;
 }
 
-/* ========== Toast ========== */
 .toast {
     position: fixed;
     bottom: 30px;
@@ -1132,7 +1131,6 @@ footer {
 .toast.info i { color: var(--primary-color); }
 .toast.warning i { color: #FF9800; }
 
-/* ========== Empty State ========== */
 .empty-state {
     grid-column: 1 / -1;
     text-align: center;
@@ -1156,7 +1154,6 @@ footer {
     font-size: 13px;
 }
 
-/* ========== Responsive ========== */
 @media (min-width: 768px) {
     body {
         padding: 24px;
@@ -1244,10 +1241,18 @@ footer {
     .website-name {
         font-size: 15px;
         margin-bottom: 4px;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
     }
     
     .website-desc {
         font-size: 12px;
+        line-height: 1.4;
+        padding: 0 4px;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
     }
     
     .custom-site {
@@ -1275,7 +1280,27 @@ footer {
 
 @media (min-width: 480px) and (max-width: 767px) {
     .websites-grid {
-        grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
+        gap: 10px;
+    }
+    
+    .website-card {
+        min-height: 94px;
+        padding: 12px 8px;
+    }
+    
+    .website-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 17px;
+        margin-bottom: 8px;
+    }
+    
+    .website-name {
+        font-size: 12px;
+    }
+    
+    .website-desc {
+        font-size: 10px;
     }
     
     .input-group {
@@ -1284,5 +1309,30 @@ footer {
     
     .form-row.three-cols .input-group {
         min-width: calc(50% - 7px);
+    }
+}
+
+@media (max-width: 400px) {
+    body {
+        padding: 10px 8px;
+    }
+    
+    .websites-grid {
+        gap: 6px;
+    }
+    
+    .website-card {
+        min-height: 80px;
+        padding: 8px 4px;
+    }
+    
+    .website-desc {
+        font-size: 9px;
+    }
+    
+    .pinned-badge {
+        width: 14px;
+        height: 14px;
+        font-size: 7px;
     }
 }
