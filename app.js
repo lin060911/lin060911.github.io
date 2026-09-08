@@ -139,7 +139,7 @@ const originalWebsites = [
     { id:"1game",name:"来一把!",url:"https://lin060911.github.io/1game/",category:"游戏",icon:"",image:"./images/1game.png",color:"#4a69e5",iconColor:"#ffffff",desc:"简易双人battle小游戏" },
     { id:"color-master",name:"色彩大师",url:"https://lin060911.github.io/color/",category:"游戏",icon:"",image:"./images/color.png",color:"#d86e7d",iconColor:"#ffffff",desc:"色差辨别挑战" },
     { id:"demine",name:"反向扫雷",url:"https://lin060911.github.io/deMine/",category:"游戏",icon:"",image:"./images/bomb.png",color:"#6ae03f",iconColor:"#ffffff",desc:"逆向思维逻辑解密" },
-    { id:"demine",name:"弹雨漫步",url:"https://lin060911.github.io/NS/",category:"游戏",icon:"",image:"./images/ns.png",color:"#000000",iconColor:"#ffffff",desc:"轻量化肉鸽弹幕射击" },
+    { id:"demine",name:"弹雨漫游",url:"https://lin060911.github.io/NS/",category:"游戏",icon:"",image:"./images/ns.png",color:"#000000",iconColor:"#ffffff",desc:"轻量化肉鸽弹幕射击" },
     { id:"tsense",name:"时间感测试",url:"https://lin060911.github.io/tSense/",category:"游戏",icon:"fa-solid fa-clock",image:"",color:"#3f87e0",iconColor:"#ffffff",desc:"人体内在时钟校准" },
 ];
 
